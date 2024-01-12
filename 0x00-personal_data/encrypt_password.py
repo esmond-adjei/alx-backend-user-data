@@ -4,13 +4,13 @@
 import bcrypt
 
 
-def hash_password(user_password: str) -> bytes:
+def hash_password(password: str) -> bytes:
     """Encrypts a user's password using a randomly generated salt.
     """
-    return bcrypt.hashpw(user_password.encode('utf-8'), bcrypt.gensalt())
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
-def is_valid(hashed_password: bytes, user_password: str) -> bool:
+def is_valid(hashed_password: bytes, password: str) -> bool:
     """Checks if a hashed password matches the provided user password.
     """
-    return bcrypt.checkpw(user_password.encode('utf-8'), hashed_password)
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
