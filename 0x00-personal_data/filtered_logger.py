@@ -60,7 +60,7 @@ def main():
     columns = fields.split(',')
     query = "SELECT {} FROM users;".format(fields)
     info_logger = get_logger()
-    connection = create_database_connection()
+    connection = get_db()
     with connection.cursor() as cursor:
         cursor.execute(query)
         rows = cursor.fetchall()
