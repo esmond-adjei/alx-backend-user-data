@@ -16,12 +16,12 @@ SENSITIVE_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(
-        fields: List[str], redaction: str, log_message: str, separator: str,
+    fields: List[str], redaction: str, message: str, separator: str,
         ) -> str:
     """Filters a log line to redact sensitive information.
     """
     extract, replace = (patterns["extract"], patterns["replace"])
-    return re.sub(extract(fields, separator), replace(redaction), log_message)
+    return re.sub(extract(fields, separator), replace(redaction), message)
 
 
 def create_logger() -> logging.Logger:
