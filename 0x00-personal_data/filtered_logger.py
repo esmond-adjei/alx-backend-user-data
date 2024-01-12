@@ -12,7 +12,7 @@ patterns = {
     'extract': lambda x, y: r'(?P<field>{})=[^{}]*'.format('|'.join(x), y),
     'replace': lambda x: r'\g<field>={}'.format(x),
 }
-SENSITIVE_FIELDS = ("name", "email", "phone", "ssn", "password")
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(
@@ -29,7 +29,7 @@ def get_logger() -> logging.Logger:
     """
     logger = logging.getLogger("user_data")
     stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(RedactingFormatter(SENSITIVE_FIELDS))
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.setLevel(logging.INFO)
     logger.propagate = False
     logger.addHandler(stream_handler)
