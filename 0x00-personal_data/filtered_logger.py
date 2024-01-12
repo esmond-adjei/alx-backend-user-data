@@ -7,8 +7,8 @@ import mysql.connector
 import os
 
 
-class Formatter(logging.Formatter):
-    """ Custom Formatter class for Holberton logs
+class RedactingFormatter(logging.RedactingFormatter):
+    """ Custom RedactingFormatter class for Holberton logs
     """
 
     REDACTION = "***"
@@ -16,7 +16,7 @@ class Formatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
-        super(Formatter, self).__init__(self.FORMAT)
+        super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
@@ -57,8 +57,8 @@ def configure_logger() -> logging.Logger:
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
 
-    formatter = Formatter(list(SENSITIVE_FIELDS))
-    console_handler.setFormatter(formatter)
+    formatter = RedactingFormatter(list(SENSITIVE_FIELDS))
+    console_handler.setRedactingFormatter(formatter)
 
     logger.addHandler(console_handler)
     return logger
