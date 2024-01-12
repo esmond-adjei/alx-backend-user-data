@@ -24,7 +24,7 @@ def filter_datum(
     return re.sub(extract(fields, separator), replace(redaction), message)
 
 
-def create_logger() -> logging.Logger:
+def get_logger() -> logging.Logger:
     """Creates a new logger for handling sensitive user data.
     """
     logger = logging.getLogger("user_data")
@@ -59,7 +59,7 @@ def main():
     fields = "name,email,phone,ssn,password,ip,last_login,user_agent"
     columns = fields.split(',')
     query = "SELECT {} FROM users;".format(fields)
-    info_logger = create_logger()
+    info_logger = get_logger()
     connection = create_database_connection()
     with connection.cursor() as cursor:
         cursor.execute(query)
