@@ -27,7 +27,7 @@ def stats() -> str:
 
 
 @app_views.route('/unauthorized/', strict_slashes=False)
-def unauthorized() -> str:
+def unauthorized() -> None:
     """ GET /api/v1/unauthorized
     Return:
       - abort 401
@@ -36,7 +36,7 @@ def unauthorized() -> str:
 
 
 @app_views.route('/forbidden/', strict_slashes=False)
-def forbidden() -> str:
+def forbidden() -> None:
     """ GET /api/v1/forbidden
     Return:
       - abort 403
