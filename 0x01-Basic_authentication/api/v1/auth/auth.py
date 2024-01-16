@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""Basic Auth
+"""
 from typing import List, TypeVar
 from flask import request
 
