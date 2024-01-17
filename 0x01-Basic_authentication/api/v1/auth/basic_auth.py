@@ -34,7 +34,10 @@ class BasicAuth(Auth):
         """
         if type(base64_authorization_header) == str:
             try:
-                value = base64.b64decode(base64_authorization_header, validate=True)
+                value = base64.b64decode(
+                    base64_authorization_header,
+                    validate=True
+                    )
 
                 return value.decode('utf-8')
             except (binascii.Error, UnicodeDecodeError):

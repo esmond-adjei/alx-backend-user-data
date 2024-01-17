@@ -13,7 +13,7 @@ class Auth:
         """
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
-        
+
         for xpath in map(lambda x: x.strip(), excluded_paths):
             if xpath.endswith('*'):
                 xpath = xpath.replace('*', '.*')
@@ -25,7 +25,7 @@ class Auth:
             if re.match(xpath, path):
                 return False
         return True
-    
+
     def authorization_header(self, request=None) -> str:
         """returns the value of the header request Authorization
         """
