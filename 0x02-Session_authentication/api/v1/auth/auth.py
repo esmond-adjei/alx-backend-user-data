@@ -3,7 +3,6 @@
 """
 import re
 from typing import List, TypeVar
-from flask import request
 
 from models.user import User
 
@@ -38,7 +37,6 @@ class Auth:
         """retrieves the User instance for a request
         """
         if request is not None:
-            # Retrieve the user from the database based on the request
             user = User.get(id=request.user_id)
             return user
         
