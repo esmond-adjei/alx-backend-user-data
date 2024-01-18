@@ -31,19 +31,22 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """ returns the value of the header request Authorization
         """
-        if request is not None:
+        if request:
             return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ retrieves the User instance for a request
         """
-        if request is not None:
-            user = User.get(id=request.user_id)
-            return user
+        if request:
+            try:
+                user = User.get(id=request.user_id)
+                return user
+            except Exception:
+                return None
 
     def session_cookie(self, request=None):
         """ returns the session cookie
         """
-        if request is not None:
+        if request:
             session_cookie = os.getenv('SESSION_NAME', '_my_session_id')
             return request.cookies.get(session_cookie)

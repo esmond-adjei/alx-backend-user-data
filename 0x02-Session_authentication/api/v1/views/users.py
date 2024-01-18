@@ -6,7 +6,7 @@ from flask import abort, jsonify, request
 from models.user import User
 
 
-def get_user(user_id):
+def get_user_or_404(user_id):
     """ Get a User object by its ID
     """
     user = User.get(user_id)
@@ -38,9 +38,9 @@ def view_one_user(user_id: str = None) -> str:
         abort(404)
 
     if user_id == 'me' and request.current_user:
-        user = get_user(request.current_user.id)
+        user = get_user_or_404(request.current_user.id)
         return user.to_json()
-    user = get_user(user_id)
+    user = get_user_or_404(user_id)
     return user
 
 
