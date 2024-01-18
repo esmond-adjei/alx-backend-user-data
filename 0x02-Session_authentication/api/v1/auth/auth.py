@@ -10,7 +10,7 @@ from models.user import User
 class Auth:
     """Auth class"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """determines if authentication is required for the path
+        """ determines if authentication is required for the path
         """
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
@@ -28,17 +28,20 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """returns the value of the header request Authorization
+        """ returns the value of the header request Authorization
         """
         if request is not None:
             return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """retrieves the User instance for a request
+        """ retrieves the User instance for a request
         """
         if request is not None:
             user = User.get(id=request.user_id)
             return user
     
     def session_cookie(self, request=None):
-        ...
+        """ returns the session cookie
+        """
+        if request is not None:
+            return request.headers['_my_session_id']
