@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Basic Auth
 """
+import os
 import re
 from typing import List, TypeVar
 
@@ -39,9 +40,10 @@ class Auth:
         if request is not None:
             user = User.get(id=request.user_id)
             return user
-    
+
     def session_cookie(self, request=None):
         """ returns the session cookie
         """
         if request is not None:
-            return request.headers['_my_session_id']
+            session_cookie = os.getenv('SESSION_NAME', '_my_session_id')
+            return request.cookies.get(session_cookie)
