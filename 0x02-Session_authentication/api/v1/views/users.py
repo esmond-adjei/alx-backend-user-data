@@ -36,8 +36,7 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
-    
-    print(">> [39] users.py", request.current_user)
+
     if user_id == 'me' and request.current_user:
         user = get_user(request.current_user.id)
         return user.to_json()
