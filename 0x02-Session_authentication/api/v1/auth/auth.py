@@ -39,4 +39,6 @@ class Auth:
         if request is not None:
             user = User.get(id=request.user_id)
             return user
-        
+    
+    def session_cookie(self, request=None):
+        ...
