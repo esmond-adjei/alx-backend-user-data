@@ -13,5 +13,5 @@ class UserSession(Base):
         """ Initialize a UserSession instance
         """
         super().__init__(*args, **kwargs)
-        self.user_id = kwargs.get('user_id', None)
-        self.session_id = kwargs.get('session_id', None)
+        self.user_id = kwargs.get('user_id')
+        self.session_id = kwargs.get('session_id')
