@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """ SESSION AUTH
 """
+from uuid import uuid4
 from models.user import User
 from .auth import Auth
-from uuid import uuid4
 
 
 class SessionAuth(Auth):

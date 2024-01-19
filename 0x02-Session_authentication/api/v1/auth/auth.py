@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ Basic Auth
 """
-import os
 import re
+from os import getenv
 from typing import List, TypeVar
 
 from models.user import User
@@ -44,5 +44,5 @@ class Auth:
         """ returns the session cookie
         """
         if request:
-            session_cookie = os.getenv('SESSION_NAME', '_my_session_id')
+            session_cookie = getenv('SESSION_NAME', '_my_session_id')
             return request.cookies.get(session_cookie)
