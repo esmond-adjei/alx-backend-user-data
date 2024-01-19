@@ -38,11 +38,7 @@ class Auth:
         """ retrieves the User instance for a request
         """
         if request:
-            try:
-                user = User.get(id=request.user_id)
-                return user
-            except Exception:
-                return None
+            return User.get(id=request.user_id)
 
     def session_cookie(self, request=None):
         """ returns the session cookie
