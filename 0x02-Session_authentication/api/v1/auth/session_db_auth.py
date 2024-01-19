@@ -53,8 +53,8 @@ class SessionDBAuth(SessionExpAuth):
             return False
         if not self.user_id_for_session_id(session_id):
             return False
-        user_session = UserSession.get(session_id)
-        if user_session is not None:
-            user_session.remove()
+        user_session = UserSession.search({'session_id': session_id})
+        if len(user_session) != 0:
+            user_session[0].remove()
             return True
         return False
