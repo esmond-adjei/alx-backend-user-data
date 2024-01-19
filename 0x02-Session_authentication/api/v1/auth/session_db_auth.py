@@ -23,7 +23,7 @@ class SessionDBAuth(SessionExpAuth):
         """ returns user id based on session id
         """
         user_session = UserSession.search({'session_id': session_id})
-        if len(user_session) != 0:
+        if user_session:
             return user_session
         return None
 
