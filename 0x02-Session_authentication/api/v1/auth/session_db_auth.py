@@ -6,6 +6,9 @@ from .session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 
 
+format_string = "%Y-%m-%dT%H:%M:%S"
+
+
 class SessionDBAuth(SessionExpAuth):
     """ Session DB Auth class
     """
@@ -35,7 +38,7 @@ class SessionDBAuth(SessionExpAuth):
         print(">> created_at: {}".format(created_at))
         if created_at is None:
             return None
-        expire_at = datetime.strftime(created_at)\
+        expire_at = datetime.strptime(created_at, format_string)\
             + timedelta(seconds=self.session_duration)
         if expire_at < datetime.now():
             return None
