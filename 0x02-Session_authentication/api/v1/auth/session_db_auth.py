@@ -24,9 +24,22 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None or not isinstance(session_id, str):
             return None
         user_session = UserSession.search({'session_id': session_id})
-        return user_session if user_session else None
+        if len(user_session) == 0:
+            return None
+        user_session = user_session[0]
+        if self.session_duration <= 0:
+            return user_session.user_id
+        if 'created_at' not in user_session.to_json():
+            return None
+        created_at = user_session.to_json().get('created_at')
+        if created_at is None:
+            return None
+        expire_at = created_at + timedelta(seconds=self.session_duration)
+        if expire_at < datetime.now():
+            return None
+        return user_session.user_id
 
-    def destroy(self, request=None):
+    def destroy_session(self, request=None):
         """ destroys session
         """
         if request is None:
