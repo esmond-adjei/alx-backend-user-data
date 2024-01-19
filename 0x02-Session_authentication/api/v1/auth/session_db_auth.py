@@ -32,9 +32,11 @@ class SessionDBAuth(SessionExpAuth):
         if 'created_at' not in user_session.to_json():
             return None
         created_at = user_session.to_json().get('created_at')
+        print(">> created_at: {}".format(created_at))
         if created_at is None:
             return None
-        expire_at = created_at + timedelta(seconds=self.session_duration)
+        expire_at = datetime.strftime(created_at)\
+            + timedelta(seconds=self.session_duration)
         if expire_at < datetime.now():
             return None
         return user_session.user_id
