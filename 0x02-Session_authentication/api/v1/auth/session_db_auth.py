@@ -15,17 +15,29 @@ class SessionDBAuth(SessionExpAuth):
         session_id = super().create_session(user_id)
         if session_id is None:
             return None
-        user = UserSession(user_id=user_id, session_id=session_id).save()
-        user.save()
+        UserSession(user_id=user_id, session_id=session_id).save()
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """ returns user id based on session id
         """
+        if session_id is None or not isinstance(session_id, str):
+            return None
         user_session = UserSession.search({'session_id': session_id})
-        if user_session:
-            return user_session
-        return None
+        if len(user_session) == 0:
+            return None
+        user_session = user_session[0]
+        if self.session_duration <= 0:
+            return user_session.user_id
+        if 'created_at' not in user_session.to_json():
+            return None
+        created_at = user_session.to_json().get('created_at')
+        if created_at is None:
+            return None
+        expire_at = created_at + timedelta(seconds=self.session_duration)
+        if expire_at < datetime.now():
+            return None
+        return user_session.user_id
 
     def destroy_session(self, request=None):
         """ destroys session
