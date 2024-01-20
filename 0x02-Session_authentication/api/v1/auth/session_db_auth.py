@@ -26,7 +26,7 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None or not isinstance(session_id, str):
             return None
         user_session = UserSession.search({'session_id': session_id})
-        if len(user_session) == 0:
+        if not session_id or len(user_session) == 0:
             return None
         user_session = user_session[0]
         if self.session_duration <= 0:
@@ -34,7 +34,6 @@ class SessionDBAuth(SessionExpAuth):
         if 'created_at' not in user_session.to_json():
             return None
         created_at = user_session.to_json().get('created_at')
-        print(">> created_at: {}".format(created_at))
         if created_at is None:
             return None
         expire_at = datetime.strptime(created_at, format_string)\
