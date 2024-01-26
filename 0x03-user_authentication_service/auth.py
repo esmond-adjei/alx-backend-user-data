@@ -43,13 +43,17 @@ class Auth:
     def valid_login(self, email: str, password: str) -> bool:
         """ Validates a user's credentials.
         """
+        user = None
         try:
             user = self._db.find_user_by(email=email)
+            if user is not None:
+                return bcrypt.checkpw(
+                    password.encode("utf-8"),
+                    user.hashed_password,
+                )
         except NoResultFound:
             return False
-        user_pwd = user.hashed_password
-        pwd = password.encode("utf-8")
-        return bcrypt.checkpwd(pwd, user_pwd)
+        return False
 
     def create_session(self, email: str) -> str:
         """ Creates a new user session.
