@@ -43,7 +43,6 @@ class Auth:
     def valid_login(self, email: str, password: str) -> bool:
         """ Validates a user's credentials.
         """
-        user = None
         try:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
@@ -55,7 +54,6 @@ class Auth:
     def create_session(self, email: str) -> str:
         """ Creates a new user session.
         """
-        user = None
         try:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
@@ -85,7 +83,6 @@ class Auth:
     def get_reset_password_token(self, email: str) -> str:
         """ Generates a password reset token for a user.
         """
-        user = None
         try:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
